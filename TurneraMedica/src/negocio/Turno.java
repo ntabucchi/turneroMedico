@@ -1,15 +1,14 @@
 package negocio;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 
 public class Turno {
-	private LocalDate fecha;
-	private LocalTime hora;
+	private Date fecha;
+	private String hora;
 	private Medico medico;
 	private Paciente paciente;
-	
-	public Turno(LocalDate fecha, LocalTime hora, Medico medico, Paciente paciente) {
+		
+	public Turno(Date fecha, String hora, Medico medico, Paciente paciente) {
 		super();
 		this.fecha = fecha;
 		this.hora = hora;
@@ -17,16 +16,22 @@ public class Turno {
 		this.paciente = paciente;
 	}
 	
-	public LocalDate getFecha() {
+	public Turno(Date fecha, String hora, Paciente paciente) {
+		this.fecha = fecha;
+		this.hora = hora;
+		this.paciente = paciente;
+	}
+
+	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	public LocalTime getHora() {
+	public String getHora() {
 		return hora;
 	}
-	public void setHora(LocalTime hora) {
+	public void setHora(String hora) {
 		this.hora = hora;
 	}
 	public Medico getMedico() {

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-16">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/Proyectos/Java/workspace/turneroMedico/TurneraMedica/lib/msbase.jar"/>
+	<classpathentry kind="lib" path="D:/Proyectos/Java/workspace/turneroMedico/TurneraMedica/lib/mssql-jdbc-7.4.1.jre8.jar"/>
+	<classpathentry kind="lib" path="D:/Proyectos/Java/workspace/turneroMedico/TurneraMedica/lib/mssqlserver.jar"/>
+	<classpathentry kind="lib" path="D:/Proyectos/Java/workspace/turneroMedico/TurneraMedica/lib/msutil.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

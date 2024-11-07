@@ -8,6 +8,10 @@ public class Paciente extends Usuario{
 		this.idPaciente = idPaciente;
 	}
 
+	public Paciente(String nombre, String apellido, String documento) {
+		super(nombre, apellido, documento);
+	}
+
 	public int getIdPaciente() {
 		return idPaciente;
 	}
