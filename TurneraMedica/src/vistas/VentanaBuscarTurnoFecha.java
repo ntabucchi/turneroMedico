@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
 
 public class VentanaBuscarTurnoFecha extends JFrame {
 
@@ -29,9 +30,12 @@ public class VentanaBuscarTurnoFecha extends JFrame {
 	 */
 	public VentanaBuscarTurnoFecha(Medico m) {
 		JFrame frame = new JFrame("Buscar Pacientes");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 100);
-        JPanel panel = new JPanel(new GridLayout(2, 2));
+		frame.setSize(506, 152);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        JPanel panel = new JPanel(new GridLayout(2, 2, 10, 10));
+        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
         
         JLabel lblNewLabel = new JLabel("Fecha (yyyy-mm-yy)");
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -74,7 +78,7 @@ public class VentanaBuscarTurnoFecha extends JFrame {
 				};
 			}					
 		
-			new VentanaMedicoTurnos(data);				
+			new VentanaMedicoTurnos(data, fecha);				
 		}
 	}
 }

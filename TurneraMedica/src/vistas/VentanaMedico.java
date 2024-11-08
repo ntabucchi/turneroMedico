@@ -4,19 +4,18 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import negocio.Medico;
 import persistencia.MedicoDAO;
 
 import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JTextArea;
 import javax.swing.JButton;
-import java.awt.Color;
+
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;import java.awt.event.ActionEvent;
 
 public class VentanaMedico extends JFrame {
@@ -25,8 +24,7 @@ public class VentanaMedico extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -47,26 +45,23 @@ public class VentanaMedico extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaMedico() {
-		setTitle("Login");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 403, 110);
-		contentPane = new JPanel(new GridLayout(2, 2));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setTitle("Médico");
+	    setSize(506, 152);
+	    setLocationRelativeTo(null);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        
+	    setLayout(new BorderLayout()); 
+		
+		JPanel panel = new JPanel(new GridLayout(2, 2, 10, 10));
+		panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-		setContentPane(contentPane);
+		setContentPane(panel);
 		
 		JLabel lblNewLabel = new JLabel("N\u00FAmero de documento");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		contentPane.add(lblNewLabel);
+		panel.add(lblNewLabel);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setRows(10);
-		textArea.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textArea.setForeground(new Color(0, 0, 0));
-		textArea.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.BLACK, Color.BLACK));
-		textArea.setLineWrap(true);
-		textArea.setColumns(20);
-		contentPane.add(textArea);
+		panel.add(textArea);
 		
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
@@ -79,7 +74,7 @@ public class VentanaMedico extends JFrame {
 				}
 			}
 		});
-		contentPane.add(btnIngresar);
+		panel.add(btnIngresar);
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
@@ -87,6 +82,6 @@ public class VentanaMedico extends JFrame {
 				dispose();
 			}
 		});
-		contentPane.add(btnVolver);		
+		panel.add(btnVolver);		
 	}
 }
