@@ -15,8 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class VentanaPacientes extends JFrame {
-	
+public class VentanaReporte extends JFrame {
+
 	/**
 	 * 
 	 */
@@ -25,19 +25,19 @@ public class VentanaPacientes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaPacientes() {
-		String[] columnNames = {"Paciente", "Documento"};
+	public VentanaReporte() {
+		String[] columnNames = {"Médico", "Turnos", "Monto"};
 		Object[][] data = {
-	            {"Juan Pérez", 25443189},
-	            {"Ana Gómez", 30127118},
-	            {"Carlos López", 35667886},
-	            {"Belén Sánchez", 30226887}
+	            {"Carla Gonzalez", 25, 10000},
+	            {"Gabriel Díaz", 30, 25000},
+	            {"Josefina Vera", 15, 5000},
+	            {"Sebastian Ortiz", 40, 30000}
 	        };
         
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         JTable table = new JTable(model);
         
-        JFrame frame = new JFrame("Pacientes");
+        JFrame frame = new JFrame("Reporte");
         frame.setSize(506, 300);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,4 +74,5 @@ public class VentanaPacientes extends JFrame {
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
 	}
+
 }

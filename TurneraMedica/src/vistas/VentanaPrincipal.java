@@ -52,14 +52,23 @@ public class VentanaPrincipal extends JFrame {
 	    JButton btnPaciente = new JButton("Pacientes");
 	    btnPaciente.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		VentanaPacientes vp = new VentanaPacientes();
-	    	//	vp.setVisible(true);
+	    		new VentanaPacientes();
 	    	}
 	    });
 	    panel.add(btnPaciente);	    
 	    JButton btnTurnos = new JButton("Turnos");
+	    btnTurnos.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		new VentanaAsignarTurno();
+	    	}
+	    });
 	    panel.add(btnTurnos);
 	    JButton btnReportes = new JButton("Reportes");
+	    btnReportes.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		new VentanaReporteFechas();
+	    	}
+	    });
 	    panel.add(btnReportes);
 
 	    getContentPane().add(panel);

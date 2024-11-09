@@ -1,45 +1,62 @@
 package vistas;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import negocio.Medico;
-import negocio.Turno;
-import persistencia.SistemaTurnosDAO;
-
-import javax.swing.JLabel;
-
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class VentanaBuscarTurnoFecha extends JFrame {
+public class VentanaReporteFechas extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaReporteFechas frame = new VentanaReporteFechas();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public VentanaBuscarTurnoFecha(Medico m) {
-		JFrame frame = new JFrame("Buscar por fecha");
-		frame.setSize(506, 152);
+	public VentanaReporteFechas() {
+		JFrame frame = new JFrame("Reportes");
+		frame.setSize(506, 250);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        JPanel panel = new JPanel(new GridLayout(2, 1, 10, 10));
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(new BorderLayout());
+        
+        JPanel panel = new JPanel(new GridLayout(4, 1, 15, 10)); 
         panel.setBorder(new EmptyBorder(20, 20, 20, 20));
-     
+
+        //Fecha Desde
         JPanel pnlFecha = new JPanel();
         pnlFecha.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 1));
         
@@ -59,15 +76,39 @@ public class VentanaBuscarTurnoFecha extends JFrame {
         pnlFecha.add(comboBoxAnio);
         panel.add(pnlFecha);
         
+        //Lista Fecha hasta
+        JPanel pnlFechaHasta = new JPanel();
+        pnlFechaHasta.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 1));
+        
+        JComboBox<Integer> comboBoxDiaHasta = new JComboBox<>(dias());
+        //JComboBox comboBoxDia = new JComboBox();
+        pnlFechaHasta.add(new JLabel("Día:"));
+        pnlFechaHasta.add(comboBoxDiaHasta);
+        
+        JComboBox<String> comboBoxMesHasta = new JComboBox<>(meses());
+        //JComboBox comboBoxMes = new JComboBox();
+        pnlFechaHasta.add(new JLabel("Mes:"));
+        pnlFechaHasta.add(comboBoxMesHasta);
+        
+        JComboBox<Integer> comboBoxAnioHasta = new JComboBox<>(anios());
+        //JComboBox comboBoxAnio = new JComboBox();
+        pnlFechaHasta.add(new JLabel("Año:"));
+        pnlFechaHasta.add(comboBoxAnioHasta);
+        panel.add(pnlFechaHasta);
+                
         JPanel pnlPie = new JPanel(new GridLayout(1, 2, 10, 10));
-        JButton btnBuscar = new JButton("Buscar");
-        btnBuscar.addActionListener(new ActionListener() {
+        panel.add(pnlPie);
+
+        JButton btnAsignarTurno = new JButton("Buscar");
+        btnAsignarTurno.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		String fecha = comboBoxAnio.getSelectedItem() + "-" + obtenerMes(comboBoxMes.getSelectedItem().toString()) + "-" + comboBoxDia.getSelectedItem();
-        		buscar(m, fecha);
+        		String fecha = comboBoxDia.getSelectedItem() + " de " + comboBoxMes.getSelectedItem() + " " + comboBoxAnio.getSelectedItem();
+        		String fechaHasta = comboBoxDiaHasta.getSelectedItem() + " de " + comboBoxMesHasta.getSelectedItem() + " " + comboBoxAnioHasta.getSelectedItem();
+        		new VentanaReporte();
         	}
         });
-        pnlPie.add(btnBuscar);
+        pnlPie.add(btnAsignarTurno);
+
         JButton btnVolver = new JButton("Volver");
         btnVolver.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -75,32 +116,11 @@ public class VentanaBuscarTurnoFecha extends JFrame {
         	}
         });
         pnlPie.add(btnVolver);
-        panel.add(pnlPie);        
-        
-        frame.getContentPane().add(panel);
-        frame.setVisible(true);
+
+        frame.getContentPane().add(panel, BorderLayout.CENTER);
+        frame.setVisible(true); 
 	}
 
-	public void buscar(Medico m, String fecha) {
-		if(m != null) {
-			SistemaTurnosDAO lstTurnos = new SistemaTurnosDAO();
-			List<Turno> turnos = lstTurnos.consultarTurno(m.getIdMedico(), fecha);
-			Object[][] data = new Object[turnos.size()][];		
-		
-			for (int i = 0; i < turnos.size(); i++) {
-				Turno turno = turnos.get(i);
-		    
-				data[i] = new Object[] {
-		    		turno.getPaciente().getNombre() + " " + turno.getPaciente().getApellido(), 
-		    		turno.getFecha(),
-		    		turno.getHora()
-				};
-			}					
-		
-			new VentanaMedicoTurnos(data, fecha);				
-		}
-	}
-	
 	public Integer[] dias() {
 		Integer[] dias = new Integer[31];
         for (int i = 0; i < 31; i++) {
@@ -142,5 +162,4 @@ public class VentanaBuscarTurnoFecha extends JFrame {
 		}
 		return anios;
 	}
-
 }
