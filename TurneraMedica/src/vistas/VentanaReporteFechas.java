@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import negocio.Turno;
 
 public class VentanaReporteFechas extends JFrame {
 
@@ -60,18 +61,15 @@ public class VentanaReporteFechas extends JFrame {
         JPanel pnlFecha = new JPanel();
         pnlFecha.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 1));
         
-        JComboBox<Integer> comboBoxDia = new JComboBox<>(dias());
-        //JComboBox comboBoxDia = new JComboBox();
+        JComboBox<Integer> comboBoxDia = new JComboBox<>(Turno.dias());
         pnlFecha.add(new JLabel("Día:"));
         pnlFecha.add(comboBoxDia);
         
-        JComboBox<String> comboBoxMes = new JComboBox<>(meses());
-        //JComboBox comboBoxMes = new JComboBox();
+        JComboBox<String> comboBoxMes = new JComboBox<>(Turno.meses());
         pnlFecha.add(new JLabel("Mes:"));
         pnlFecha.add(comboBoxMes);
         
-        JComboBox<Integer> comboBoxAnio = new JComboBox<>(anios());
-        //JComboBox comboBoxAnio = new JComboBox();
+        JComboBox<Integer> comboBoxAnio = new JComboBox<>(Turno.anios());
         pnlFecha.add(new JLabel("Año:"));
         pnlFecha.add(comboBoxAnio);
         panel.add(pnlFecha);
@@ -80,18 +78,15 @@ public class VentanaReporteFechas extends JFrame {
         JPanel pnlFechaHasta = new JPanel();
         pnlFechaHasta.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 1));
         
-        JComboBox<Integer> comboBoxDiaHasta = new JComboBox<>(dias());
-        //JComboBox comboBoxDia = new JComboBox();
+        JComboBox<Integer> comboBoxDiaHasta = new JComboBox<>(Turno.dias());
         pnlFechaHasta.add(new JLabel("Día:"));
         pnlFechaHasta.add(comboBoxDiaHasta);
         
-        JComboBox<String> comboBoxMesHasta = new JComboBox<>(meses());
-        //JComboBox comboBoxMes = new JComboBox();
+        JComboBox<String> comboBoxMesHasta = new JComboBox<>(Turno.meses());
         pnlFechaHasta.add(new JLabel("Mes:"));
         pnlFechaHasta.add(comboBoxMesHasta);
         
-        JComboBox<Integer> comboBoxAnioHasta = new JComboBox<>(anios());
-        //JComboBox comboBoxAnio = new JComboBox();
+        JComboBox<Integer> comboBoxAnioHasta = new JComboBox<>(Turno.anios());
         pnlFechaHasta.add(new JLabel("Año:"));
         pnlFechaHasta.add(comboBoxAnioHasta);
         panel.add(pnlFechaHasta);
@@ -119,47 +114,5 @@ public class VentanaReporteFechas extends JFrame {
 
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         frame.setVisible(true); 
-	}
-
-	public Integer[] dias() {
-		Integer[] dias = new Integer[31];
-        for (int i = 0; i < 31; i++) {
-            dias[i] = i + 1;
-        }
-        return dias;
-	}
-	
-	public String[] meses() {
-		String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-		return meses;
-	}
-	
-	public String obtenerMes(String _mes) {
-		String mes = null;
-		
-		if(_mes.equals("Enero")) { mes = "1";}
-		if(_mes.equals("Febrero")) { mes = "2";}
-		if(_mes.equals("Marzo")) { mes = "3";}
-		if(_mes.equals("Abril")) { mes = "4";}
-		if(_mes.equals("Mayo")) { mes = "5";}
-		if(_mes.equals("Junio")) { mes = "6";}
-		if(_mes.equals("Julio")) { mes = "7";}
-		if(_mes.equals("Agosto")) { mes = "8";}
-		if(_mes.equals("Septiembre")) { mes = "9";}
-		if(_mes.equals("Octubre")) { mes = "10";}
-		if(_mes.equals("Noviembre")) { mes = "11";}
-		if(_mes.equals("Diciembre")) { mes = "12";}
-
-		return mes;
-	}
-	
-	public Integer[] anios() {
-		Integer[] anios = new Integer[101];
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		for (int i = 0; i < 101; i++) {
-			anios[i] = currentYear - 50 + i; // Años desde 50 años atrás hasta 50 años adelante
-		}
-		return anios;
 	}
 }

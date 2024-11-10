@@ -57,12 +57,15 @@ public class VentanaMedico extends JFrame {
 
 		setContentPane(panel);
 		
+		JPanel pnlBuscar = new JPanel(new GridLayout(1, 2, 10, 10));
 		JLabel lblNewLabel = new JLabel("N\u00FAmero de documento");
-		panel.add(lblNewLabel);
+		pnlBuscar.add(lblNewLabel);
 		
 		JTextArea textArea = new JTextArea();
-		panel.add(textArea);
+		pnlBuscar.add(textArea);
+		panel.add(pnlBuscar);
 		
+		JPanel pnlBotones = new JPanel();
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -74,7 +77,7 @@ public class VentanaMedico extends JFrame {
 				}
 			}
 		});
-		panel.add(btnIngresar);
+		pnlBotones.add(btnIngresar);
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
@@ -82,6 +85,7 @@ public class VentanaMedico extends JFrame {
 				dispose();
 			}
 		});
-		panel.add(btnVolver);		
+		pnlBotones.add(btnVolver);
+		panel.add(pnlBotones);
 	}
 }

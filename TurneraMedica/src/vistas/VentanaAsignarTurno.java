@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.Calendar;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import negocio.Turno;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -55,28 +57,35 @@ public class VentanaAsignarTurno extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());
         
-        JPanel panel = new JPanel(new GridLayout(4, 1, 15, 10)); 
+        JPanel panel = new JPanel(new GridLayout(5, 1, 15, 10)); 
         panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         //Fecha
         JPanel pnlFecha = new JPanel();
         pnlFecha.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 1));
         
-        JComboBox<Integer> comboBoxDia = new JComboBox<>(dias());
-        //JComboBox comboBoxDia = new JComboBox();
-        pnlFecha.add(new JLabel("Día:"));
+        JComboBox<Integer> comboBoxDia = new JComboBox<>(Turno.dias());
+        pnlFecha.add(new JLabel("Fecha:"));
         pnlFecha.add(comboBoxDia);
         
-        JComboBox<String> comboBoxMes = new JComboBox<>(meses());
-        //JComboBox comboBoxMes = new JComboBox();
-        pnlFecha.add(new JLabel("Mes:"));
+        JComboBox<String> comboBoxMes = new JComboBox<>(Turno.meses());
         pnlFecha.add(comboBoxMes);
         
-        JComboBox<Integer> comboBoxAnio = new JComboBox<>(anios());
-        //JComboBox comboBoxAnio = new JComboBox();
-        pnlFecha.add(new JLabel("Año:"));
+        JComboBox<Integer> comboBoxAnio = new JComboBox<>(Turno.anios());
         pnlFecha.add(comboBoxAnio);
         panel.add(pnlFecha);
+        
+        //Hora
+        JPanel pnlHora = new JPanel();
+        pnlHora.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 1));
+        
+        JComboBox<String> comboBoxHora = new JComboBox<>(Turno.horas());
+        pnlHora.add(new JLabel("Hora:"));
+        pnlHora.add(comboBoxHora);
+        
+        JComboBox<String> comboBoxMinutos = new JComboBox<>(Turno.minutos());
+        pnlHora.add(comboBoxMinutos);
+        panel.add(pnlHora);
         
         //Lista Pacientes
         JPanel pnlPaciente = new JPanel();
@@ -102,7 +111,6 @@ public class VentanaAsignarTurno extends JFrame {
 
         String[] opcionesMedicos = {"Opción 1 (200)", "Opción 2 (201)", "Opción 3 (202)", "Opción 4 (204)"};
         JComboBox<String> comboBoxMedicos = new JComboBox<>(opcionesMedicos);
-        //JComboBox comboBoxMedicos = new JComboBox<>();
         pnlMedico.add(comboBoxMedicos);
         panel.add(pnlMedico);
                 
@@ -112,10 +120,11 @@ public class VentanaAsignarTurno extends JFrame {
         JButton btnAsignarTurno = new JButton("Asignar Turno");
         btnAsignarTurno.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		String paciente = obtenerDocumento(comboBoxPacientes.getSelectedItem().toString());
-        		String medico = obtenerDocumento(comboBoxMedicos.getSelectedItem().toString());
+        		String paciente = comboBoxPacientes.getSelectedItem().toString();
+        		String medico = comboBoxMedicos.getSelectedItem().toString();
         		String fecha = comboBoxDia.getSelectedItem() + " de " + comboBoxMes.getSelectedItem() + " " + comboBoxAnio.getSelectedItem();
-        		new VentanaDetalleTurno(paciente, medico, fecha);
+        		String hora = comboBoxHora.getSelectedItem() + ":" + comboBoxMinutos.getSelectedItem();
+        		new VentanaDetalleTurno(paciente, medico, fecha, hora);
         	}
         });
         pnlPie.add(btnAsignarTurno);
@@ -131,52 +140,10 @@ public class VentanaAsignarTurno extends JFrame {
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         frame.setVisible(true); 
     }
-
-	public Integer[] dias() {
-		Integer[] dias = new Integer[31];
-        for (int i = 0; i < 31; i++) {
-            dias[i] = i + 1;
-        }
-        return dias;
-	}
-	
-	public String[] meses() {
-		String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-		return meses;
-	}
-	
-	public String obtenerMes(String _mes) {
-		String mes = null;
 		
-		if(_mes.equals("Enero")) { mes = "1";}
-		if(_mes.equals("Febrero")) { mes = "2";}
-		if(_mes.equals("Marzo")) { mes = "3";}
-		if(_mes.equals("Abril")) { mes = "4";}
-		if(_mes.equals("Mayo")) { mes = "5";}
-		if(_mes.equals("Junio")) { mes = "6";}
-		if(_mes.equals("Julio")) { mes = "7";}
-		if(_mes.equals("Agosto")) { mes = "8";}
-		if(_mes.equals("Septiembre")) { mes = "9";}
-		if(_mes.equals("Octubre")) { mes = "10";}
-		if(_mes.equals("Noviembre")) { mes = "11";}
-		if(_mes.equals("Diciembre")) { mes = "12";}
-
-		return mes;
-	}
-	
-	public Integer[] anios() {
-		Integer[] anios = new Integer[101];
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		for (int i = 0; i < 101; i++) {
-			anios[i] = currentYear - 50 + i; // Años desde 50 años atrás hasta 50 años adelante
-		}
-		return anios;
-	}
-	
 	public String obtenerDocumento(String texto) {
         String[] partes = texto.split("[()]+");
         
         return partes[1];        
-	}
+	}	
 }

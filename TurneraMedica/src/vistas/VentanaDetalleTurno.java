@@ -23,13 +23,13 @@ public class VentanaDetalleTurno extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaDetalleTurno(String paciente, String medico, String fecha) {
+	public VentanaDetalleTurno(String paciente, String medico, String fecha, String hora) {
 		JFrame frame = new JFrame("Detalle turno");
-		frame.setSize(506, 230);
+		frame.setSize(506, 300);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        JPanel panel = new JPanel(new GridLayout(4, 1, 15, 10)); 
+        JPanel panel = new JPanel(new GridLayout(5, 1, 15, 10)); 
         panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         JPanel pnlDetallePaciente = new JPanel();
@@ -61,6 +61,16 @@ public class VentanaDetalleTurno extends JFrame {
         lblFechaSeleccionada.setFont(new Font("Tahoma", Font.PLAIN, 11));
         pnlDetalleFecha.add(lblFechaSeleccionada);
         panel.add(pnlDetalleFecha);
+        
+        JPanel pnlDetalleHora = new JPanel();
+        pnlDetalleHora.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 1));
+        JLabel lblHora = new JLabel("Hora");
+        lblHora.setFont(new Font("Tahoma", Font.BOLD, 11));
+        pnlDetalleHora.add(lblHora);
+        JLabel lblHoraSeleccionada = new JLabel(hora);
+        lblHoraSeleccionada.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        pnlDetalleHora.add(lblHoraSeleccionada);
+        panel.add(pnlDetalleHora);
        
         JPanel pnlBoton = new JPanel();
         JButton btnVolver = new JButton("Volver");

@@ -10,7 +10,6 @@ import persistencia.SistemaTurnosDAO;
 import javax.swing.JLabel;
 
 import java.awt.FlowLayout;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -43,18 +42,15 @@ public class VentanaBuscarTurnoFecha extends JFrame {
         JPanel pnlFecha = new JPanel();
         pnlFecha.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 1));
         
-        JComboBox<Integer> comboBoxDia = new JComboBox<>(dias());
-        //JComboBox comboBoxDia = new JComboBox();
+        JComboBox<Integer> comboBoxDia = new JComboBox<>(Turno.dias());
         pnlFecha.add(new JLabel("Día:"));
         pnlFecha.add(comboBoxDia);
         
-        JComboBox<String> comboBoxMes = new JComboBox<>(meses());
-        //JComboBox comboBoxMes = new JComboBox();
+        JComboBox<String> comboBoxMes = new JComboBox<>(Turno.meses());
         pnlFecha.add(new JLabel("Mes:"));
         pnlFecha.add(comboBoxMes);
         
-        JComboBox<Integer> comboBoxAnio = new JComboBox<>(anios());
-        //JComboBox comboBoxAnio = new JComboBox();
+        JComboBox<Integer> comboBoxAnio = new JComboBox<>(Turno.anios());
         pnlFecha.add(new JLabel("Año:"));
         pnlFecha.add(comboBoxAnio);
         panel.add(pnlFecha);
@@ -63,7 +59,7 @@ public class VentanaBuscarTurnoFecha extends JFrame {
         JButton btnBuscar = new JButton("Buscar");
         btnBuscar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		String fecha = comboBoxAnio.getSelectedItem() + "-" + obtenerMes(comboBoxMes.getSelectedItem().toString()) + "-" + comboBoxDia.getSelectedItem();
+        		String fecha = comboBoxAnio.getSelectedItem() + "-" + Turno.obtenerMes(comboBoxMes.getSelectedItem().toString()) + "-" + comboBoxDia.getSelectedItem();
         		buscar(m, fecha);
         	}
         });
@@ -100,47 +96,4 @@ public class VentanaBuscarTurnoFecha extends JFrame {
 			new VentanaMedicoTurnos(data, fecha);				
 		}
 	}
-	
-	public Integer[] dias() {
-		Integer[] dias = new Integer[31];
-        for (int i = 0; i < 31; i++) {
-            dias[i] = i + 1;
-        }
-        return dias;
-	}
-	
-	public String[] meses() {
-		String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-		return meses;
-	}
-	
-	public String obtenerMes(String _mes) {
-		String mes = null;
-		
-		if(_mes.equals("Enero")) { mes = "1";}
-		if(_mes.equals("Febrero")) { mes = "2";}
-		if(_mes.equals("Marzo")) { mes = "3";}
-		if(_mes.equals("Abril")) { mes = "4";}
-		if(_mes.equals("Mayo")) { mes = "5";}
-		if(_mes.equals("Junio")) { mes = "6";}
-		if(_mes.equals("Julio")) { mes = "7";}
-		if(_mes.equals("Agosto")) { mes = "8";}
-		if(_mes.equals("Septiembre")) { mes = "9";}
-		if(_mes.equals("Octubre")) { mes = "10";}
-		if(_mes.equals("Noviembre")) { mes = "11";}
-		if(_mes.equals("Diciembre")) { mes = "12";}
-
-		return mes;
-	}
-	
-	public Integer[] anios() {
-		Integer[] anios = new Integer[101];
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		for (int i = 0; i < 101; i++) {
-			anios[i] = currentYear - 50 + i; // Años desde 50 años atrás hasta 50 años adelante
-		}
-		return anios;
-	}
-
 }
