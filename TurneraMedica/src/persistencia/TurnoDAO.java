@@ -10,9 +10,9 @@ import java.util.List;
 import negocio.Paciente;
 import negocio.Turno;
 
-public class SistemaTurnosDAO {
-
-	public List<Turno> consultarTurno1(int idMedico, String _fecha) {
+public class TurnoDAO {
+	
+	public List<Turno> consultarTurno(int idMedico, String _fecha) {
 	    PreparedStatement stmt = null;
 	    ResultSet rs = null;
 	    List<Turno> turnos = new ArrayList<>();

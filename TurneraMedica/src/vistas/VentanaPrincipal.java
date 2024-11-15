@@ -52,7 +52,7 @@ public class VentanaPrincipal extends JFrame {
 	    JButton btnPaciente = new JButton("Pacientes");
 	    btnPaciente.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		new VentanaPacientes();
+	    		new VentanaPrincipalPaciente();
 	    	}
 	    });
 	    panel.add(btnPaciente);	    

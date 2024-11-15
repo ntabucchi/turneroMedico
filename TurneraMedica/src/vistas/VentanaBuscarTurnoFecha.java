@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 import negocio.Medico;
 import negocio.Turno;
-import persistencia.SistemaTurnosDAO;
+import persistencia.TurnoDAO;
 
 import javax.swing.JLabel;
 
@@ -79,7 +79,7 @@ public class VentanaBuscarTurnoFecha extends JFrame {
 
 	public void buscar(Medico m, String fecha) {
 		if(m != null) {
-			SistemaTurnosDAO lstTurnos = new SistemaTurnosDAO();
+			TurnoDAO lstTurnos = new TurnoDAO();
 			List<Turno> turnos = lstTurnos.consultarTurno(m.getIdMedico(), fecha);
 			Object[][] data = new Object[turnos.size()][];		
 		

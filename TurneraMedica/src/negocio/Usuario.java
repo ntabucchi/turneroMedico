@@ -1,6 +1,7 @@
 package negocio;
 
 public abstract class Usuario {
+	private int id;
 	private String nombre;
 	private String apellido;
     private String documento;
@@ -9,6 +10,14 @@ public abstract class Usuario {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.documento = documento;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNombre() {
