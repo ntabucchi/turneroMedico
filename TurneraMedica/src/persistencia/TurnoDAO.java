@@ -17,7 +17,7 @@ public class TurnoDAO {
 	    ResultSet rs = null;
 	    List<Turno> turnos = new ArrayList<>();
 	    try {
-	    	String query = "SELECT u.Nombre, u.Apellido, u.Documento, t.Fecha, t.Hora, m.Id AS MedicoId " +
+	    	String query = "SELECT u.nombre, u.apellido, u.documento, t.fecha, t.hora, m.idMedico AS MedicoId, p.idPaciente, p.direccion, p.celular " +
 	                   "FROM Turnos t " +
 	                   "JOIN Medicos m ON t.MedicoId = m.Id " +
 	                   "JOIN Pacientes p ON t.PacienteId = p.Id " +
@@ -30,13 +30,16 @@ public class TurnoDAO {
 	        rs = stmt.executeQuery();
 	        
 	        while (rs.next()) {
-                String nombre = rs.getString("Nombre");
-                String apellido = rs.getString("Apellido");
-                String documento = rs.getString("Documento");
-                String hora = rs.getString("Hora");
-                Date fecha = rs.getDate("Fecha");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String documento = rs.getString("documento");
+                int idPaciente = rs.getInt("idPaciente");
+                String direccion = rs.getString("direccion");
+                String celular = rs.getString("celular");
+                String hora = rs.getString("hora");
+                Date fecha = rs.getDate("fecha");
                 
-                Paciente paciente = new Paciente(nombre, apellido, documento);
+                Paciente paciente = new Paciente(nombre, apellido, documento, idPaciente, direccion, celular);
                 Turno turno = new Turno(fecha, hora, paciente);
                 turnos.add(turno);
             }

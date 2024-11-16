@@ -9,10 +9,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+
+import excepciones.CampoRequeridoException;
+import excepciones.RegistroNoExistenteException;
 import negocio.Paciente;
+import persistencia.PacienteDAO;
+import javax.swing.JTextField;
 
 public class VentanaModificarPaciente extends JFrame {
 
@@ -20,6 +25,7 @@ public class VentanaModificarPaciente extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JTextField textAreaDocumento;
 
 	/**
 	 * Launch the application.
@@ -46,7 +52,7 @@ public class VentanaModificarPaciente extends JFrame {
 	    setLocationRelativeTo(null);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        
-	    setLayout(new BorderLayout()); 
+	    getContentPane().setLayout(new BorderLayout()); 
 		
 		JPanel panel = new JPanel(new GridLayout(2, 2, 10, 10));
 		panel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -56,20 +62,39 @@ public class VentanaModificarPaciente extends JFrame {
 		JPanel pnlBuscar = new JPanel(new GridLayout(1, 2, 10, 10));
 		JLabel lblNewLabel = new JLabel("N\u00FAmero de documento");
 		pnlBuscar.add(lblNewLabel);
-		
-		JTextArea textArea = new JTextArea();
-		pnlBuscar.add(textArea);
 		panel.add(pnlBuscar);
+		
+		textAreaDocumento = new JTextField();
+		pnlBuscar.add(textAreaDocumento);
+		textAreaDocumento.setColumns(10);
 		
 		JPanel pnlBotones = new JPanel();
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Paciente paciente = new Paciente("Maria", "Dominguez", textArea.getText(), 1, "Calle San Martin 216", "1154678690");
+				try {
+					PacienteDAO pac_dao = new PacienteDAO();
 				
-				if(paciente != null) {
+					String documento = textAreaDocumento.getText().trim();
+					if (documento.isEmpty()) {
+						throw new CampoRequeridoException("El campo Documento es obligatorio.");
+					}
+				
+					Paciente paciente = pac_dao.obtener(textAreaDocumento.getText());
+					if (paciente == null) {
+						throw new RegistroNoExistenteException("El paciente no existe");
+					}
+
+					dispose();
 					new VentanaDatosModificarPaciente(paciente);
-				}
+					
+				} catch (CampoRequeridoException ex) {
+			        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			    } catch (RegistroNoExistenteException ex) {
+			        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			    } catch (Exception ex) {
+			        JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
+			    }
 			}
 		});
 		pnlBotones.add(btnIngresar);

@@ -25,7 +25,9 @@ public class UsuarioDAO {
 	            idUsuario = rs.getInt(1);
 	        }
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	    	if (!e.getMessage().contains("UNIQUE KEY")) {
+				e.printStackTrace();
+            }
 	    } finally {
 	        DataSource.cerrarConexion(rs, stmt);
 	    }
@@ -33,6 +35,31 @@ public class UsuarioDAO {
 	    return idUsuario;
 	}
 	
+	public boolean update(String nombre, String apellido, String documento, int idPaciente) {
+	    PreparedStatement stmt = null;
+	    boolean exito = false;
+
+	    try {
+	        String query = "UPDATE Usuarios set nombre=?, apellido=?, documento= ? where id= ?";
+	        Connection con = DataSource.obtenerConexion();
+	        stmt = con.prepareStatement(query);
+	        stmt.setString(1, nombre);
+	        stmt.setString(2, apellido);
+	        stmt.setString(3, documento);
+	        stmt.setInt(4, idPaciente);
+
+	        int filasAfectadas = stmt.executeUpdate();
+	        if (filasAfectadas > 0) {
+	            exito = true;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        DataSource.cerrarConexion(null, stmt);
+	    }
+
+	    return exito;
+	}
 	
 	public boolean eliminar(int id) {
 	    PreparedStatement stmt = null;

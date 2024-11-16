@@ -3,6 +3,9 @@ package persistencia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 import negocio.Paciente;
 
 public class PacienteDAO {
@@ -27,8 +30,6 @@ public class PacienteDAO {
 	            int idPaciente = rs.getInt("idPaciente");
 	            String direccion = rs.getString("direccion");
 	            String celular = rs.getString("celular");
-	            
-	            System.out.println("idPaciente: " + idPaciente);
 	            
 	            paciente = new Paciente(nombre, apellido, documento, idPaciente, direccion, celular);
 	            paciente.setIdPaciente(idPaciente);
@@ -59,12 +60,39 @@ public class PacienteDAO {
 				nuevo_paciente = rs.getInt(1);
 	        }
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (!e.getMessage().contains("UNIQUE KEY")) {
+				e.printStackTrace();
+            }
 		} finally {
 			DataSource.cerrarConexion(rs,stmt);
 		}
 		
 		return nuevo_paciente;
+	}
+	
+	public boolean update(String direccion, String celular, int idPaciente) {
+	    PreparedStatement stmt = null;
+	    boolean exito = false;
+
+	    try {
+	        String query = "UPDATE Pacientes set direccion=?, celular= ? WHERE idPaciente = ?";
+	        Connection con = DataSource.obtenerConexion();
+	        stmt = con.prepareStatement(query);
+	        stmt.setString(1, direccion);
+	        stmt.setString(2, celular);
+	        stmt.setInt(3, idPaciente);
+
+	        int filasAfectadas = stmt.executeUpdate();
+	        if (filasAfectadas > 0) {
+	            exito = true;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        DataSource.cerrarConexion(null, stmt);
+	    }
+
+	    return exito;
 	}
 	
 	public boolean eliminar(Paciente paciente) {
@@ -88,5 +116,36 @@ public class PacienteDAO {
 	    }
 
 	    return exito;
+	}
+
+	public List<Paciente> listarPacientes() {
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    List<Paciente> pacientes = new ArrayList<>();
+	    try {
+	    	String query = "SELECT u.nombre, u.apellido, u.documento, p.idPaciente, p.direccion, p.celular " +
+	                   "FROM Pacientes p " +
+	                   "JOIN Usuarios u ON u.Id = p.idPaciente ";
+	        Connection con = DataSource.obtenerConexion();
+	        stmt = con.prepareStatement(query);
+	        rs = stmt.executeQuery();
+	        
+	        while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String documento = rs.getString("documento");
+                int idPaciente = rs.getInt("idPaciente");
+                String direccion = rs.getString("direccion");
+                String celular = rs.getString("celular");
+                
+                Paciente paciente = new Paciente(nombre, apellido, documento, idPaciente, direccion, celular);
+                pacientes.add(paciente);
+            }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        DataSource.cerrarConexion(rs, stmt);
+	    }
+	    return pacientes;
 	}
 }

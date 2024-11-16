@@ -11,17 +11,7 @@ public class Paciente extends Usuario{
 		this.direccion = direccion;
 		this.celular = celular;
 	}
-	
-	public Paciente(String nombre, String apellido, String documento, String direccion, String celular) {
-		super(nombre, apellido, documento);
-		this.direccion = direccion;
-		this.celular = celular;
-	}
-	
-	public Paciente(String nombre, String apellido, String documento) {
-		super(nombre, apellido, documento);
-	}
-	
+		
 	public int getIdPaciente() {
 		return idPaciente;
 	}
